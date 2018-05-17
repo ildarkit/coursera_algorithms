@@ -7,17 +7,21 @@ def partition3(a, l, r):
     #write your code here
     x = a[l]
     j = l
-    jj = 0
+    o = l
     for i in range(l + 1, r + 1):
         if a[i] < x:
+            o += 1
+            a[i], a[o] = a[o], a[i]
+            a[j], a[o] = a[o], a[j]
             j += 1
-            a[i], a[j] = a[j], a[i]
         elif a[i] == x:
-            jj = i
-    a[l], a[j] = a[j], a[l]
-    if jj == 0:
-        jj = j
-    return j, jj
+            o += 1
+            a[i], a[o] = a[o], a[i]
+    if j > l:
+        a[l], a[j - 1] = a[j - 1], a[l]
+    else:
+        a[l], a[j] = a[j], a[l]
+    return j, o
 
 
 def partition2(a, l, r):

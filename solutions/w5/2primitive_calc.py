@@ -16,26 +16,32 @@ def optimal_sequence_origin(n):
 
 
 def optimal_sequence(n):
-    sequence = [1]
-    i = 1
-    while i < n:
+    min_steps = [1]
+    inxs = []
+    k = len(min_steps)
+    for i in range(k, n + 1):
+        pairs = []
+        inx = i - 1
+        pairs.append((inx, min_steps[inx] + 1))
+        if i % 3 == 0:
+            inx = i // 3
+            pairs.append((inx, min_steps[inx] + 1))
+        if i % 2 == 0:
+            inx = i // 2
+            pairs.append((inx, min_steps[inx] + 1))
+        min_ = min(pairs, key=lambda x: x[1])
 
-        min_else = 100_000_000
-        if i + 1 >= sequence[i - 1] - 1:
-            min1 = sequence[i - 1] + 1
-        else:
-            min1 = min_else
-        if i + 1 >= sequence[i - 1] * 2:
-            min2 = sequence[i // 2] + 1
-        else:
-            min2 = min_else
-        if i + 1 >= sequence[i - 1] * 3:
-            min3 = sequence[i // 3] + 1
-        else:
-            min3 = min_else
-        sequence.append(min(min1, min2, min3))
-        i += 1
-    return sequence
+        min_steps.append(min_[1])
+        inxs.append(min_[0])
+
+    numbers = []
+    k = n
+    while k > 0:
+        numbers.append(k)
+        k = inxs[k - 1]
+    numbers.reverse()
+
+    return numbers
 
 
 if __name__ == '__main__':
@@ -44,4 +50,4 @@ if __name__ == '__main__':
     sequence = list(optimal_sequence(n))
     print(len(sequence) - 1)
     for x in sequence:
-        print(x, end=' ')
+         print(x, end=' ')
